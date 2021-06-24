@@ -25,7 +25,7 @@ paths:
                 $ref: '#/components/schemas/User'
               examples: {}
         '404':
-          description: User Not Found
+          $ref: '#/components/responses/api_result'
       operationId: get-users-userId
       description: Retrieve the information of the user with the matching user ID.
     patch:
@@ -33,14 +33,7 @@ paths:
       operationId: patch-users-userId
       responses:
         '200':
-          description: User Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples: {}
-        '404':
-          description: User Not Found
+          $ref: '#/components/responses/api_result'
       description: Update the information of an existing user.
       requestBody:
         content:
@@ -104,24 +97,51 @@ paths:
                 - birthday
             examples: {}
         description: Post the necessary fields for the API to create a new user.
-      description: Create a new user.
+      description: Create a new user
       parameters: []
-  /regions:
+  /region:
     get:
       summary: All regions
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Region'
       operationId: get-regions
       description: get all regions
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: prefecture
+          description: prefecture code
     parameters: []
     post:
       summary: Add new region
       operationId: post-regions
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/api_result'
       description: Create region
       parameters:
         - $ref: '#/components/parameters/api_key'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                prefecture:
+                  type: integer
+              required:
+                - name
+                - prefecture
   '/regions/{regionId}':
     parameters:
       - schema:
@@ -131,20 +151,31 @@ paths:
         required: true
         description: region ID
     get:
-      summary: Your GET endpoint
-      responses: {}
+      summary: Specific region information
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
       operationId: get-regions-regionId
       description: get information about the region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
     patch:
       summary: ''
       operationId: patch-regions-regionId
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/api_result'
       description: update region information
       parameters:
         - $ref: '#/components/parameters/api_key'
-  '/regions/{regionId}/points':
+  '/regions/{regionId}/point':
     parameters:
       - schema:
           type: string
@@ -154,7 +185,15 @@ paths:
     get:
       summary: All diving points
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Point'
       operationId: get-regions-regionId-points
       description: get all diving point of specified region
     post:
@@ -162,7 +201,7 @@ paths:
       operationId: post-regions-regionId-points
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/api_result'
       description: Create diving point of the specified region
       parameters:
         - $ref: '#/components/parameters/api_key'
@@ -179,9 +218,15 @@ paths:
         in: path
         required: true
     get:
-      summary: Your GET endpoint
+      summary: Specific point information
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Point'
       operationId: get-regions-regionId-points-pointId
       description: get information about the point
     patch:
@@ -258,3 +303,23 @@ components:
       schema:
         type: string
       description: API Key
+  responses:
+    api_result:
+      description: result of the request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              result:
+                type: string
+                enum:
+                  - ok
+                  - failed
+              error_data:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  detail:
+                    type: string
