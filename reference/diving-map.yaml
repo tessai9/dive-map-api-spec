@@ -1,0 +1,260 @@
+openapi: 3.1.0
+info:
+  title: map
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: integer
+        name: userId
+        in: path
+        required: true
+        description: Id of an existing user.
+    get:
+      summary: Get User Info by User ID
+      tags: []
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples: {}
+        '404':
+          description: User Not Found
+      operationId: get-users-userId
+      description: Retrieve the information of the user with the matching user ID.
+    patch:
+      summary: Update User Information
+      operationId: patch-users-userId
+      responses:
+        '200':
+          description: User Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples: {}
+        '404':
+          description: User Not Found
+      description: Update the information of an existing user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                birthday:
+                  type: string
+                  format: date
+              required:
+                - first_name
+                - last_name
+                - email
+                - birthday
+            examples: {}
+        description: Patch user properties to update.
+  /user:
+    post:
+      summary: Create New User
+      operationId: post-user
+      responses:
+        '200':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples: {}
+        '400':
+          description: Missing Required Information
+        '409':
+          description: Email Already Taken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                birthday:
+                  type: string
+                  format: date
+              required:
+                - first_name
+                - last_name
+                - email
+                - birthday
+            examples: {}
+        description: Post the necessary fields for the API to create a new user.
+      description: Create a new user.
+      parameters: []
+  /regions:
+    get:
+      summary: All regions
+      responses: {}
+      operationId: get-regions
+      description: get all regions
+    parameters: []
+    post:
+      summary: Add new region
+      operationId: post-regions
+      responses:
+        '200':
+          description: OK
+      description: Create region
+      parameters:
+        - $ref: '#/components/parameters/api_key'
+  '/regions/{regionId}':
+    parameters:
+      - schema:
+          type: integer
+        name: regionId
+        in: path
+        required: true
+        description: region ID
+    get:
+      summary: Your GET endpoint
+      responses: {}
+      operationId: get-regions-regionId
+      description: get information about the region
+    patch:
+      summary: ''
+      operationId: patch-regions-regionId
+      responses:
+        '200':
+          description: OK
+      description: update region information
+      parameters:
+        - $ref: '#/components/parameters/api_key'
+  '/regions/{regionId}/points':
+    parameters:
+      - schema:
+          type: string
+        name: regionId
+        in: path
+        required: true
+    get:
+      summary: All diving points
+      tags: []
+      responses: {}
+      operationId: get-regions-regionId-points
+      description: get all diving point of specified region
+    post:
+      summary: Add new diving point
+      operationId: post-regions-regionId-points
+      responses:
+        '200':
+          description: OK
+      description: Create diving point of the specified region
+      parameters:
+        - $ref: '#/components/parameters/api_key'
+  '/regions/{regionId}/points/{pointId}':
+    parameters:
+      - schema:
+          type: string
+        name: regionId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: pointId
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-regions-regionId-points-pointId
+      description: get information about the point
+    patch:
+      summary: ''
+      operationId: patch-regions-regionId-points-pointId
+      responses:
+        '200':
+          description: OK
+      description: update information of the point
+      parameters:
+        - $ref: '#/components/parameters/api_key'
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      description: user model
+      examples:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        birthday:
+          type: string
+          format: date
+          example: '1997-10-31'
+      required:
+        - id
+        - first_name
+        - last_name
+        - email
+    Region:
+      title: Region
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        prefecture:
+          type: integer
+      description: region model
+    Point:
+      title: Point
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        point_map:
+          type: string
+          format: uri
+      description: diving point model
+  parameters:
+    api_key:
+      name: api_key
+      in: header
+      required: false
+      schema:
+        type: string
+      description: API Key
