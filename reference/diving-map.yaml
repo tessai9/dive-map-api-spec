@@ -1,7 +1,13 @@
 openapi: 3.1.0
 info:
-  title: map
+  title: Diving Map Book API
   version: '1.0'
+  summary: API for the diving map
+  description: |-
+    Diving Map Book is a collection of the diving point map.
+    Summarize many diving map and use them in diving.
+  contact:
+    name: Tesao
 servers:
   - url: 'http://localhost:3000'
 paths:
@@ -15,7 +21,6 @@ paths:
         description: Id of an existing user.
     get:
       summary: Get User Info by User ID
-      tags: []
       responses:
         '200':
           description: User Found
@@ -28,6 +33,8 @@ paths:
           $ref: '#/components/responses/api_result'
       operationId: get-users-userId
       description: Retrieve the information of the user with the matching user ID.
+      tags:
+        - user
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -58,6 +65,8 @@ paths:
                 - birthday
             examples: {}
         description: Patch user properties to update.
+      tags:
+        - user
   /user:
     post:
       summary: Create New User
@@ -99,6 +108,8 @@ paths:
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user
       parameters: []
+      tags:
+        - user
   /region:
     get:
       summary: All regions
@@ -119,6 +130,8 @@ paths:
           in: query
           name: prefecture
           description: prefecture code
+      tags:
+        - region
     parameters: []
     post:
       summary: Add new region
@@ -142,6 +155,8 @@ paths:
               required:
                 - name
                 - prefecture
+      tags:
+        - region
   '/regions/{regionId}':
     parameters:
       - schema:
@@ -166,6 +181,8 @@ paths:
           application/json:
             schema:
               type: object
+      tags:
+        - region
     patch:
       summary: ''
       operationId: patch-regions-regionId
@@ -175,6 +192,8 @@ paths:
       description: update region information
       parameters:
         - $ref: '#/components/parameters/api_key'
+      tags:
+        - region
   '/regions/{regionId}/point':
     parameters:
       - schema:
@@ -184,7 +203,6 @@ paths:
         required: true
     get:
       summary: All diving points
-      tags: []
       responses:
         '200':
           description: OK
@@ -196,6 +214,9 @@ paths:
                   $ref: '#/components/schemas/Point'
       operationId: get-regions-regionId-points
       description: get all diving point of specified region
+      tags:
+        - point
+        - region
     post:
       summary: Add new diving point
       operationId: post-regions-regionId-points
@@ -205,6 +226,9 @@ paths:
       description: Create diving point of the specified region
       parameters:
         - $ref: '#/components/parameters/api_key'
+      tags:
+        - point
+        - region
   '/regions/{regionId}/points/{pointId}':
     parameters:
       - schema:
@@ -219,7 +243,6 @@ paths:
         required: true
     get:
       summary: Specific point information
-      tags: []
       responses:
         '200':
           description: OK
@@ -229,6 +252,9 @@ paths:
                 $ref: '#/components/schemas/Point'
       operationId: get-regions-regionId-points-pointId
       description: get information about the point
+      tags:
+        - point
+        - region
     patch:
       summary: ''
       operationId: patch-regions-regionId-points-pointId
@@ -238,6 +264,9 @@ paths:
       description: update information of the point
       parameters:
         - $ref: '#/components/parameters/api_key'
+      tags:
+        - region
+        - point
 components:
   schemas:
     User:
@@ -272,6 +301,8 @@ components:
         - first_name
         - last_name
         - email
+      x-tags:
+        - User
     Region:
       title: Region
       type: object
@@ -323,3 +354,7 @@ components:
                     type: string
                   detail:
                     type: string
+tags:
+  - name: user
+  - name: region
+  - name: point
