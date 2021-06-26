@@ -71,18 +71,6 @@ paths:
     post:
       summary: Create New User
       operationId: post-user
-      responses:
-        '200':
-          description: User Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-              examples: {}
-        '400':
-          description: Missing Required Information
-        '409':
-          description: Email Already Taken
       requestBody:
         content:
           application/json:
@@ -110,6 +98,9 @@ paths:
       parameters: []
       tags:
         - user
+      responses:
+        '200':
+          $ref: '#/components/responses/api_result'
   /region:
     get:
       summary: All regions
@@ -260,7 +251,7 @@ paths:
       operationId: patch-regions-regionId-points-pointId
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/api_result'
       description: update information of the point
       parameters:
         - $ref: '#/components/parameters/api_key'
