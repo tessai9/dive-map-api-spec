@@ -10,6 +10,10 @@ info:
     name: Tesao
 servers:
   - url: 'http://localhost:3000'
+tags:
+  - name: user
+  - name: region
+  - name: point
 paths:
   '/users/{userId}':
     parameters:
@@ -345,7 +349,3 @@ components:
                     type: string
                   detail:
                     type: string
-tags:
-  - name: user
-  - name: region
-  - name: point
