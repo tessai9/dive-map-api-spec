@@ -35,7 +35,7 @@ paths:
         '404':
           $ref: '#/components/responses/api_result'
       operationId: get-users-userId
-      description: Retrieve the information of the user with the matching user ID.
+      description: retrieve the information of the user with the matching user ID.
       tags:
         - user
     patch:
@@ -44,7 +44,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/api_result'
-      description: Update the information of an existing user.
+      description: update the information of an existing user.
       requestBody:
         content:
           application/json:
@@ -97,7 +97,7 @@ paths:
                 - birthday
             examples: {}
         description: Post the necessary fields for the API to create a new user.
-      description: Create a new user
+      description: create a new user
       parameters: []
       tags:
         - user
@@ -133,7 +133,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/api_result'
-      description: Create region
+      description: create region
       parameters:
         - $ref: '#/components/parameters/api_key'
       requestBody:
@@ -217,7 +217,7 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/api_result'
-      description: Create diving point of the specified region
+      description: create diving point of the specified region
       parameters:
         - $ref: '#/components/parameters/api_key'
       tags:
