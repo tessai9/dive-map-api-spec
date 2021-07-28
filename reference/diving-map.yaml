@@ -1,4 +1,5 @@
-openapi: 3.1.0
+# openapi: 3.1.0
+openapi: 3.0.0
 info:
   title: Diving Map Book API
   version: '1.0'
@@ -80,9 +81,9 @@ paths:
             schema:
               type: object
               properties:
-                first_name:
+                name:
                   type: string
-                last_name:
+                password:
                   type: string
                 email:
                   type: string
@@ -91,8 +92,8 @@ paths:
                   type: string
                   format: date
               required:
-                - first_name
-                - last_name
+                - name
+                - password
                 - email
                 - birthday
             examples: {}
@@ -267,13 +268,13 @@ components:
       title: User
       type: object
       description: user model
+      x-tags:
+        - User
       properties:
         id:
           type: integer
           description: Unique identifier for the given user.
-        first_name:
-          type: string
-        last_name:
+        name:
           type: string
         email:
           type: string
@@ -284,11 +285,8 @@ components:
           example: '1997-10-31'
       required:
         - id
-        - first_name
-        - last_name
+        - name
         - email
-      x-tags:
-        - User
     Region:
       title: Region
       type: object
