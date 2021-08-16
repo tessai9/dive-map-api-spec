@@ -1,4 +1,3 @@
-# openapi: 3.1.0
 openapi: 3.0.0
 info:
   title: Diving Map Book API
@@ -331,10 +330,5 @@ components:
                 enum:
                   - ok
                   - failed
-              error_data:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  detail:
-                    type: string
+              message:
+                type: string
