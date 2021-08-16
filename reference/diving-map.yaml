@@ -34,15 +34,31 @@ paths:
               examples: {}
         '404':
           $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
       operationId: get-users-userId
       description: retrieve the information of the user with the matching user ID.
       tags:
         - user
+      parameters:
+        - $ref: '#/components/parameters/api_key'
     patch:
       summary: Update User Information
       operationId: patch-users-userId
       responses:
         '200':
+          $ref: '#/components/responses/api_result'
+        '400':
+          $ref: '#/components/responses/api_result'
+        '401':
+          $ref: '#/components/responses/api_result'
+        '403':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
           $ref: '#/components/responses/api_result'
       description: update the information of an existing user.
       requestBody:
@@ -70,6 +86,8 @@ paths:
         description: Patch user properties to update.
       tags:
         - user
+      parameters:
+        - $ref: '#/components/parameters/api_key'
   /user:
     post:
       summary: Create New User
@@ -98,11 +116,22 @@ paths:
             examples: {}
         description: Post the necessary fields for the API to create a new user.
       description: create a new user
-      parameters: []
+      parameters:
+        - $ref: '#/components/parameters/api_key'
       tags:
         - user
       responses:
         '200':
+          $ref: '#/components/responses/api_result'
+        '400':
+          $ref: '#/components/responses/api_result'
+        '401':
+          $ref: '#/components/responses/api_result'
+        '403':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
           $ref: '#/components/responses/api_result'
   /region:
     get:
@@ -116,6 +145,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Region'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
       operationId: get-regions
       description: get all regions
       parameters:
@@ -132,6 +165,16 @@ paths:
       operationId: post-regions
       responses:
         '200':
+          $ref: '#/components/responses/api_result'
+        '400':
+          $ref: '#/components/responses/api_result'
+        '401':
+          $ref: '#/components/responses/api_result'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
           $ref: '#/components/responses/api_result'
       description: create region
       parameters:
@@ -168,6 +211,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Region'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
       operationId: get-regions-regionId
       description: get information about the region
       requestBody:
@@ -182,6 +231,14 @@ paths:
       operationId: patch-regions-regionId
       responses:
         '200':
+          $ref: '#/components/responses/api_result'
+        '400':
+          $ref: '#/components/responses/api_result'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
           $ref: '#/components/responses/api_result'
       description: update region information
       parameters:
@@ -206,6 +263,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Point'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
       operationId: get-regions-regionId-points
       description: get all diving point of specified region
       tags:
@@ -216,6 +279,14 @@ paths:
       operationId: post-regions-regionId-points
       responses:
         '200':
+          $ref: '#/components/responses/api_result'
+        '400':
+          $ref: '#/components/responses/api_result'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
           $ref: '#/components/responses/api_result'
       description: create diving point of the specified region
       parameters:
@@ -244,6 +315,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Point'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
       operationId: get-regions-regionId-points-pointId
       description: get information about the point
       tags:
@@ -255,12 +332,59 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/api_result'
+        '400':
+          $ref: '#/components/responses/api_result'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
       description: update information of the point
       parameters:
         - $ref: '#/components/parameters/api_key'
       tags:
         - region
         - point
+  '/regions/{regionId}/points/{pointId}/map':
+    parameters:
+      - schema:
+          type: string
+        name: regionId
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: pointId
+        in: path
+        required: true
+    post:
+      summary: ''
+      operationId: post-regions-regionId-points-pointId-map
+      responses:
+        '200':
+          description: OK
+      description: add / update diving map image
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                map:
+                  type: string
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          application/octet-stream:
+            schema:
+              type: object
+              properties:
+                map:
+                  type: string
+                  format: binary
+        description: map image
 components:
   schemas:
     User:
