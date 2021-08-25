@@ -359,7 +359,7 @@ paths:
         in: path
         required: true
     post:
-      summary: ''
+      summary: Map Data
       operationId: post-regions-regionId-points-pointId-map
       responses:
         '200':
@@ -385,6 +385,9 @@ paths:
                   type: string
                   format: binary
         description: map image
+      tags:
+        - point
+        - map
 components:
   schemas:
     User:
