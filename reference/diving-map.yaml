@@ -88,6 +88,21 @@ paths:
         - user
       parameters:
         - $ref: '#/components/parameters/api_key'
+    delete:
+      summary: Delete specified user
+      operationId: delete-users-userId
+      responses:
+        '200':
+          $ref: '#/components/responses/api_result'
+        '404':
+          $ref: '#/components/responses/api_result'
+        '500':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
+      description: logical delete specified user
+      parameters:
+        - $ref: '#/components/parameters/api_key'
   /user:
     post:
       summary: Create New User
