@@ -77,11 +77,17 @@ paths:
                 birthday:
                   type: string
                   format: date
+                role:
+                  type: integer
+                  minimum: 0
+                  maximum: 2
+                  format: int32
               required:
                 - first_name
                 - last_name
                 - email
                 - birthday
+                - role
             examples: {}
         description: Patch user properties to update.
       tags:
@@ -123,11 +129,17 @@ paths:
                 birthday:
                   type: string
                   format: date
+                role:
+                  type: integer
+                  format: int32
+                  minimum: 0
+                  maximum: 2
               required:
                 - name
                 - password
                 - email
                 - birthday
+                - role
             examples: {}
         description: Post the necessary fields for the API to create a new user.
       description: create a new user
@@ -424,10 +436,11 @@ components:
           type: string
           format: date
           example: '1997-10-31'
-      required:
-        - id
-        - name
-        - email
+        role:
+          type: integer
+          minimum: 0
+          maximum: 2
+          format: int32
     Region:
       title: Region
       type: object
