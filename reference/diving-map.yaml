@@ -67,27 +67,8 @@ paths:
             schema:
               type: object
               properties:
-                first_name:
-                  type: string
-                last_name:
-                  type: string
-                email:
-                  type: string
-                  format: email
-                birthday:
-                  type: string
-                  format: date
-                role:
-                  type: integer
-                  minimum: 0
-                  maximum: 2
-                  format: int32
-              required:
-                - first_name
-                - last_name
-                - email
-                - birthday
-                - role
+                user:
+                  $ref: '#/components/schemas/User'
             examples: {}
         description: Patch user properties to update.
       tags:
@@ -119,27 +100,8 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                password:
-                  type: string
-                email:
-                  type: string
-                  format: email
-                birthday:
-                  type: string
-                  format: date
-                role:
-                  type: integer
-                  format: int32
-                  minimum: 0
-                  maximum: 2
-              required:
-                - name
-                - password
-                - email
-                - birthday
-                - role
+                user:
+                  $ref: '#/components/schemas/User'
             examples: {}
         description: Post the necessary fields for the API to create a new user.
       description: create a new user
@@ -441,6 +403,9 @@ components:
           minimum: 0
           maximum: 2
           format: int32
+        password:
+          type: string
+          minLength: 8
     Region:
       title: Region
       type: object
