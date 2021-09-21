@@ -131,9 +131,13 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Region'
+                type: object
+                properties:
+                  regions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Region'
+              examples: {}
         '500':
           $ref: '#/components/responses/api_result'
         '503':
@@ -249,9 +253,12 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Point'
+                type: object
+                properties:
+                  points:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Point'
         '404':
           $ref: '#/components/responses/api_result'
         '500':
@@ -409,14 +416,21 @@ components:
     Region:
       title: Region
       type: object
+      description: region model
       properties:
         id:
           type: integer
+          format: int32
         name:
           type: string
         prefecture:
-          type: integer
-      description: region model
+          type: object
+          properties:
+            id:
+              type: integer
+              format: int32
+            name:
+              type: string
     Point:
       title: Point
       type: object
