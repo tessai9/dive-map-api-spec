@@ -90,6 +90,8 @@ paths:
       description: logical delete specified user
       parameters:
         - $ref: '#/components/parameters/api_key'
+      tags:
+        - user
   /user:
     post:
       summary: Create New User
@@ -447,6 +449,8 @@ paths:
               required:
                 - session
         description: login parameters
+      tags:
+        - authentication
   /logout:
     delete:
       summary: logout
@@ -460,6 +464,8 @@ paths:
           $ref: '#/components/responses/api_result'
       description: logout from the service
       parameters: []
+      tags:
+        - authentication
 components:
   schemas:
     User:
