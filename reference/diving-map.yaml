@@ -178,13 +178,18 @@ paths:
             schema:
               type: object
               properties:
-                name:
-                  type: string
-                prefecture:
-                  type: integer
+                region:
+                  type: object
+                  required:
+                    - name
+                    - prefecture
+                  properties:
+                    name:
+                      type: string
+                    prefecture:
+                      type: integer
               required:
-                - name
-                - prefecture
+                - region
       tags:
         - region
   '/regions/{regionId}':
@@ -212,11 +217,6 @@ paths:
           $ref: '#/components/responses/api_result'
       operationId: get-regions-regionId
       description: get information about the region
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
       tags:
         - region
     patch:
@@ -238,6 +238,14 @@ paths:
         - $ref: '#/components/parameters/api_key'
       tags:
         - region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                region:
+                  $ref: '#/components/schemas/Region'
   '/regions/{regionId}/point':
     parameters:
       - schema:
@@ -290,6 +298,15 @@ paths:
       tags:
         - point
         - region
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                point:
+                  $ref: '#/components/schemas/Point'
+        description: point params
   '/regions/{regionId}/points/{pointId}':
     parameters:
       - schema:
@@ -342,6 +359,14 @@ paths:
       tags:
         - region
         - point
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                point:
+                  $ref: '#/components/schemas/Point'
   '/regions/{regionId}/points/{pointId}/map':
     parameters:
       - schema:
@@ -384,6 +409,57 @@ paths:
       tags:
         - point
         - map
+  /login:
+    post:
+      summary: login
+      operationId: post-login
+      responses:
+        '201':
+          description: Created
+          headers:
+            Authorization:
+              schema:
+                type: string
+              description: JWT as Bearer Token
+        '400':
+          $ref: '#/components/responses/api_result'
+        '401':
+          $ref: '#/components/responses/api_result'
+      description: login to the service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session:
+                  type: object
+                  required:
+                    - email
+                    - password
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                    password:
+                      type: string
+                      format: password
+              required:
+                - session
+        description: login parameters
+  /logout:
+    delete:
+      summary: logout
+      operationId: delete-logout
+      responses:
+        '200':
+          $ref: '#/components/responses/api_result'
+        '401':
+          $ref: '#/components/responses/api_result'
+        '503':
+          $ref: '#/components/responses/api_result'
+      description: logout from the service
+      parameters: []
 components:
   schemas:
     User:
