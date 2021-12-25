@@ -43,7 +43,7 @@ paths:
       tags:
         - user
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -74,7 +74,7 @@ paths:
       tags:
         - user
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
     delete:
       summary: Delete specified user
       operationId: delete-users-userId
@@ -89,7 +89,7 @@ paths:
           $ref: '#/components/responses/api_result'
       description: logical delete specified user
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
       tags:
         - user
   /user:
@@ -108,7 +108,7 @@ paths:
         description: Post the necessary fields for the API to create a new user.
       description: create a new user
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
       tags:
         - user
       responses:
@@ -152,6 +152,7 @@ paths:
           in: query
           name: prefecture
           description: prefecture code
+        - $ref: '#/components/parameters/authorization'
       tags:
         - region
     parameters: []
@@ -173,7 +174,7 @@ paths:
           $ref: '#/components/responses/api_result'
       description: create region
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
       requestBody:
         content:
           application/json:
@@ -221,6 +222,8 @@ paths:
       description: get information about the region
       tags:
         - region
+      parameters:
+        - $ref: '#/components/parameters/authorization'
     patch:
       summary: ''
       operationId: patch-regions-regionId
@@ -237,7 +240,7 @@ paths:
           $ref: '#/components/responses/api_result'
       description: update region information
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
       tags:
         - region
       requestBody:
@@ -280,6 +283,8 @@ paths:
       tags:
         - point
         - region
+      parameters:
+        - $ref: '#/components/parameters/authorization'
     post:
       summary: Add new diving point
       operationId: post-regions-regionId-points
@@ -296,7 +301,7 @@ paths:
           $ref: '#/components/responses/api_result'
       description: create diving point of the specified region
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
       tags:
         - point
         - region
@@ -341,6 +346,8 @@ paths:
       tags:
         - point
         - region
+      parameters:
+        - $ref: '#/components/parameters/authorization'
     patch:
       summary: ''
       operationId: patch-regions-regionId-points-pointId
@@ -357,7 +364,7 @@ paths:
           $ref: '#/components/responses/api_result'
       description: update information of the point
       parameters:
-        - $ref: '#/components/parameters/api_key'
+        - $ref: '#/components/parameters/authorization'
       tags:
         - region
         - point
@@ -411,6 +418,8 @@ paths:
       tags:
         - point
         - map
+      parameters:
+        - $ref: '#/components/parameters/authorization'
   /login:
     post:
       summary: login
@@ -451,21 +460,7 @@ paths:
         description: login parameters
       tags:
         - authentication
-  /logout:
-    delete:
-      summary: logout
-      operationId: delete-logout
-      responses:
-        '200':
-          $ref: '#/components/responses/api_result'
-        '401':
-          $ref: '#/components/responses/api_result'
-        '503':
-          $ref: '#/components/responses/api_result'
-      description: logout from the service
-      parameters: []
-      tags:
-        - authentication
+  /logout: {}
 components:
   schemas:
     User:
@@ -526,13 +521,13 @@ components:
           format: uri
       description: diving point model
   parameters:
-    api_key:
-      name: api_key
+    authorization:
+      name: Authorization
       in: header
       required: false
       schema:
         type: string
-      description: API Key
+      description: JWT for authorization
   responses:
     api_result:
       description: result of the request
