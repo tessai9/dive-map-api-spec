@@ -42,8 +42,9 @@ paths:
       description: retrieve the information of the user with the matching user ID.
       tags:
         - user
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
+      security:
+        - bearerToken: []
     patch:
       summary: Update User Information
       operationId: patch-users-userId
@@ -73,8 +74,9 @@ paths:
         description: Patch user properties to update.
       tags:
         - user
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
+      security:
+        - bearerToken: []
     delete:
       summary: Delete specified user
       operationId: delete-users-userId
@@ -88,10 +90,11 @@ paths:
         '503':
           $ref: '#/components/responses/api_result'
       description: logical delete specified user
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
       tags:
         - user
+      security:
+        - bearerToken: []
   /user:
     post:
       summary: Create New User
@@ -107,8 +110,7 @@ paths:
             examples: {}
         description: Post the necessary fields for the API to create a new user.
       description: create a new user
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
       tags:
         - user
       responses:
@@ -124,6 +126,8 @@ paths:
           $ref: '#/components/responses/api_result'
         '503':
           $ref: '#/components/responses/api_result'
+      security:
+        - bearerToken: []
   /region:
     get:
       summary: All regions
@@ -152,9 +156,10 @@ paths:
           in: query
           name: prefecture
           description: prefecture code
-        - $ref: '#/components/parameters/authorization'
       tags:
         - region
+      security:
+        - bearerToken: []
     parameters: []
     post:
       summary: Add new region
@@ -173,8 +178,7 @@ paths:
         '503':
           $ref: '#/components/responses/api_result'
       description: create region
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
       requestBody:
         content:
           application/json:
@@ -195,6 +199,8 @@ paths:
                 - region
       tags:
         - region
+      security:
+        - bearerToken: []
   '/regions/{regionId}':
     parameters:
       - schema:
@@ -222,8 +228,9 @@ paths:
       description: get information about the region
       tags:
         - region
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
+      security:
+        - bearerToken: []
     patch:
       summary: ''
       operationId: patch-regions-regionId
@@ -239,8 +246,7 @@ paths:
         '503':
           $ref: '#/components/responses/api_result'
       description: update region information
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
       tags:
         - region
       requestBody:
@@ -251,6 +257,8 @@ paths:
               properties:
                 region:
                   $ref: '#/components/schemas/Region'
+      security:
+        - bearerToken: []
   '/regions/{regionId}/point':
     parameters:
       - schema:
@@ -283,8 +291,9 @@ paths:
       tags:
         - point
         - region
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
+      security:
+        - bearerToken: []
     post:
       summary: Add new diving point
       operationId: post-regions-regionId-points
@@ -300,8 +309,7 @@ paths:
         '503':
           $ref: '#/components/responses/api_result'
       description: create diving point of the specified region
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
       tags:
         - point
         - region
@@ -314,6 +322,8 @@ paths:
                 point:
                   $ref: '#/components/schemas/Point'
         description: point params
+      security:
+        - bearerToken: []
   '/regions/{regionId}/points/{pointId}':
     parameters:
       - schema:
@@ -346,8 +356,9 @@ paths:
       tags:
         - point
         - region
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
+      security:
+        - bearerToken: []
     patch:
       summary: ''
       operationId: patch-regions-regionId-points-pointId
@@ -363,8 +374,7 @@ paths:
         '503':
           $ref: '#/components/responses/api_result'
       description: update information of the point
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
       tags:
         - region
         - point
@@ -376,6 +386,8 @@ paths:
               properties:
                 point:
                   $ref: '#/components/schemas/Point'
+      security:
+        - bearerToken: []
   '/regions/{regionId}/points/{pointId}/map':
     parameters:
       - schema:
@@ -418,8 +430,9 @@ paths:
       tags:
         - point
         - map
-      parameters:
-        - $ref: '#/components/parameters/authorization'
+      parameters: []
+      security:
+        - bearerToken: []
   /login:
     post:
       summary: login
@@ -522,14 +535,7 @@ components:
           type: string
           format: uri
       description: diving point model
-  parameters:
-    authorization:
-      name: Authorization
-      in: header
-      required: false
-      schema:
-        type: string
-      description: JWT for authorization
+  parameters: {}
   responses:
     api_result:
       description: result of the request
@@ -545,3 +551,8 @@ components:
                   - failed
               message:
                 type: string
+  securitySchemes:
+    bearerToken:
+      type: http
+      scheme: bearer
+      description: ''
