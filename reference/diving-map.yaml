@@ -154,7 +154,7 @@ paths:
         - schema:
             type: integer
           in: query
-          name: prefecture
+          name: prefecture_id
           description: prefecture code
       tags:
         - region
@@ -189,11 +189,11 @@ paths:
                   type: object
                   required:
                     - name
-                    - prefecture
+                    - prefecture_id
                   properties:
                     name:
                       type: string
-                    prefecture:
+                    prefecture_id:
                       type: integer
               required:
                 - region
