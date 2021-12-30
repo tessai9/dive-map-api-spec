@@ -149,12 +149,12 @@ paths:
         '503':
           $ref: '#/components/responses/api_result'
       operationId: get-regions
-      description: get all regions
+      description: get regions
       parameters:
         - schema:
             type: integer
           in: query
-          name: prefecture_id
+          name: prefecture
           description: prefecture code
       tags:
         - region
