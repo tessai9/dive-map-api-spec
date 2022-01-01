@@ -4,7 +4,7 @@ info:
   version: '1.0'
   description: |-
     Diving Map Book is a collection of the diving point map.
-    Summarize many diving map and use them in diving.
+    Summarize many diving maps and we are going to use them in diving.
   contact:
     name: Tesao
 servers:
@@ -95,7 +95,7 @@ paths:
         - user
       security:
         - bearerToken: []
-  /user:
+  /users:
     post:
       summary: Create New User
       operationId: post-user
@@ -128,7 +128,8 @@ paths:
           $ref: '#/components/responses/api_result'
       security:
         - bearerToken: []
-  /region:
+    parameters: []
+  /regions:
     get:
       summary: All regions
       responses:
@@ -259,7 +260,7 @@ paths:
                   $ref: '#/components/schemas/Region'
       security:
         - bearerToken: []
-  '/regions/{regionId}/point':
+  '/regions/{regionId}/points':
     parameters:
       - schema:
           type: string
@@ -475,7 +476,6 @@ paths:
         description: login parameters
       tags:
         - authentication
-  /logout: {}
 components:
   schemas:
     User:
@@ -555,4 +555,3 @@ components:
     bearerToken:
       type: http
       scheme: bearer
-      description: ''
